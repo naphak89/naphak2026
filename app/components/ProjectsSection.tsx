@@ -1,9 +1,7 @@
 "use client";
 
-import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "motion/react";
 import { GlassButton } from "./GlassButton";
 
 interface Project {
@@ -56,19 +54,8 @@ const projects: Project[] = [
 ];
 
 function ProjectCard({ project }: { project: Project; index: number }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start end", "end start"],
-  });
-  const imageY = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    ["-6%", "0%", "6%"],
-  );
-
   return (
-    <div ref={cardRef} className="flex flex-col">
+    <div className="flex flex-col">
       <div
         className={`relative rounded-[2.4rem] md:rounded-[2.5rem] bg-transparent ${project.color}  flex flex-col gap-3`}
       >
@@ -76,15 +63,13 @@ function ProjectCard({ project }: { project: Project; index: number }) {
         <div
           className={`relative aspect-square rounded-4xl md:rounded-[2rem] ${project.imageColor} overflow-hidden`}
         >
-          <motion.div style={{ y: imageY }} className="absolute inset-0">
-            <Image
-              src={project.mainPicture}
-              alt={project.title}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-          </motion.div>
+          <Image
+            src={project.mainPicture}
+            alt={project.title}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
           {/* Card footer - inside card with GlassButton, absolute bottom */}
           <GlassButton
             onClick={() => window.open(project.link, "_blank")}

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { TextScramble } from "./TextScramble";
 import { GlassButton } from "./GlassButton";
+import Link from "next/link";
 
 const titles = [
   "Software Engineer",
@@ -102,7 +103,11 @@ export function HeroSection() {
       </div>
 
       <div className="absolute bottom-[8%] z-20">
-        <GlassButton size="lg">View Resume</GlassButton>
+        <GlassButton size="lg">
+          <Link href="/resume.pdf" target="_blank">
+            View Resume
+          </Link>
+        </GlassButton>
       </div>
     </section>
   );
