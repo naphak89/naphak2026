@@ -1,26 +1,185 @@
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap");
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f5f5f5;
+  --foreground: #101010;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: "Instrument Sans", sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Instrument Sans", sans-serif;
+}
+
+/* ===== Liquid Glass Button ===== */
+
+.glass-button-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.glass-button {
+  position: relative;
+  isolation: isolate;
+  cursor: pointer;
+  border: none;
+  border-radius: 9999px;
+  overflow: hidden;
+
+  /* Frosted glass — blurred + semi-opaque */
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(18px) saturate(1.6);
+  -webkit-backdrop-filter: blur(18px) saturate(1.6);
+
+  /* Subtle edge border for depth */
+  border: 1px solid rgba(255, 255, 255, 0.5);
+
+  /* Edge shadows: top-lit highlight + soft outer glow */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04),
+    0 4px 16px rgba(0, 0, 0, 0.06);
+
+  transition:
+    background 0.35s ease,
+    backdrop-filter 0.35s ease,
+    -webkit-backdrop-filter 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+/* Hover: glass becomes transparent, edge light shifts */
+.glass-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px) saturate(1.2);
+  -webkit-backdrop-filter: blur(10px) saturate(1.2);
+  border-color: rgba(255, 255, 255, 0.65);
+
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.5),
+    inset 1px 0 1px rgba(255, 255, 255, 0.3),
+    inset -1px 0 0 rgba(255, 255, 255, 0.15),
+    0 0 24px rgba(255, 255, 255, 0.08),
+    0 8px 32px rgba(0, 0, 0, 0.07);
+}
+
+/* Active: even more transparent */
+.glass-button:active {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(6px) saturate(1.1);
+  -webkit-backdrop-filter: blur(6px) saturate(1.1);
+
+  box-shadow:
+    inset 1px 1px 1px rgba(255, 255, 255, 0.3),
+    inset -1px -1px 0 rgba(255, 255, 255, 0.1),
+    0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Light sweep band — motion slides this from left to right */
+.glass-button-shine {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.25) 44%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.25) 56%,
+    transparent 80%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Edge highlight ring — motion rotates this on hover */
+.glass-button-edge {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+  background: conic-gradient(
+    from 180deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.55) 12%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.3) 62%,
+    transparent 75%
+  );
+
+  /* Mask to border-only: ring shape */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  padding: 1.5px;
+}
+
+.glass-button-text {
+  position: relative;
+  display: block;
+  user-select: none;
+  color: var(--foreground);
+  z-index: 2;
+}
+
+.glass-button-shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  pointer-events: none;
+  box-shadow:
+    inset 0 -1px 0 rgba(0, 0, 0, 0.03),
+    0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* ===== Liquid Glass Panel (Navbar) ===== */
+
+.glass-panel {
+  position: relative;
+  overflow: hidden;
+
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(20px) saturate(1.7);
+  -webkit-backdrop-filter: blur(20px) saturate(1.7);
+
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04),
+    0 4px 16px rgba(0, 0, 0, 0.05);
+
+  transition:
+    background 0.35s ease,
+    backdrop-filter 0.35s ease,
+    -webkit-backdrop-filter 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+/* Static specular highlight for the panel */
+.glass-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  pointer-events: none;
 }

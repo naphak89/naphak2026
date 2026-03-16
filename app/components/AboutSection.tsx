@@ -1,0 +1,87 @@
+'use client';
+
+import { useRef } from 'react';
+import Image from 'next/image';
+import { motion, useScroll, useTransform } from 'motion/react';
+
+const aboutText =
+  'Full-stack Developer that can design, specialized in mobile app and web app development. I help bring digital products to life with smooth, interactive and "premium" experience';
+
+function ScrollRevealText({
+  text,
+  scrollYProgress,
+}: {
+  text: string;
+  scrollYProgress: ReturnType<typeof useScroll>['scrollYProgress'];
+}) {
+  const chars = text.split('');
+
+  return (
+    <p className="text-[clamp(1.5rem,4vw,4rem)] font-medium leading-[1.1] max-w-3xl">
+      {chars.map((char, i) => (
+        <ScrollChar
+          key={i}
+          char={char}
+          index={i}
+          total={chars.length}
+          scrollYProgress={scrollYProgress}
+        />
+      ))}
+    </p>
+  );
+}
+
+function ScrollChar({
+  char,
+  index,
+  total,
+  scrollYProgress,
+}: {
+  char: string;
+  index: number;
+  total: number;
+  scrollYProgress: ReturnType<typeof useScroll>['scrollYProgress'];
+}) {
+  const start = index / total;
+  const end = (index + 1) / total;
+  const opacity = useTransform(scrollYProgress, [start, end], [0.15, 1]);
+
+  return (
+    <motion.span style={{ opacity }} className="inline">
+      {char}
+    </motion.span>
+  );
+}
+
+export function AboutSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start 0.8', 'end 0.4'],
+  });
+
+  return (
+    <section id="about" className="relative py-24 md:py-40 px-6 md:px-[6.25%]">
+      <div ref={containerRef} className="flex flex-col md:flex-row gap-10 md:gap-16 items-start">
+        <div className="flex-1">
+          <p className="text-sm font-medium uppercase tracking-widest text-foreground/60 mb-6">
+            Myself
+          </p>
+          <ScrollRevealText text={aboutText} scrollYProgress={scrollYProgress} />
+        </div>
+
+        <div className="w-full md:w-[37%] shrink-0">
+          <div className="rounded-2xl overflow-hidden">
+            <Image
+              src="/kayakPic.jpg"
+              alt="Naphak kayaking"
+              width={708}
+              height={431}
+              className="w-full h-auto object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
