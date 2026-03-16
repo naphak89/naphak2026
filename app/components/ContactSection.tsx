@@ -1,6 +1,8 @@
 "use client";
 
-import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { useInView } from "motion/react";
+import { TextScramble } from "./TextScramble";
 
 const contactLinks = [
   { label: "email", href: "mailto:naphak.jaengjaikul@gmail.com" },
@@ -12,13 +14,51 @@ const contactLinks = [
   { label: "instagram", href: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
 ];
 
-const dummyImage = "/mainProjectPictures/StoryMapMainPic.png";
+function ContactLink({ label, href }: { label: string; href: string }) {
+  const ref = useRef<HTMLAnchorElement>(null);
+  const isInView = useInView(ref, { once: false });
+  const [triggerCount, setTriggerCount] = useState(0);
+  const hasAnimatedRef = useRef(false);
+
+  useEffect(() => {
+    if (isInView && !hasAnimatedRef.current) {
+      hasAnimatedRef.current = true;
+      setTriggerCount(1);
+    }
+  }, [isInView]);
+
+  const handleInteract = () => {
+    setTriggerCount((c) => c + 1);
+  };
+
+  return (
+    <a
+      ref={ref}
+      href={href}
+      target={href.startsWith("mailto") ? undefined : "_blank"}
+      rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
+      onMouseEnter={handleInteract}
+      onClick={handleInteract}
+      className="text-[clamp(3rem,12vw,6rem)] font-medium uppercase leading-[1.1] text-foreground hover:opacity-60 transition-opacity w-max cursor-pointer"
+    >
+      <TextScramble
+        as="span"
+        trigger={triggerCount}
+        duration={0.8}
+        speed={0.04}
+        className="inline"
+      >
+        {label}
+      </TextScramble>
+    </a>
+  );
+}
 
 export function ContactSection() {
   return (
     <section
       id="contacts"
-      className="relative py-24 md:py-16 px-6 md:px-[6.25%] bg-background"
+      className="relative py-0 pb-16 md:py-0 px-6 md:px-[6.25%] bg-background"
     >
       <div className="flex flex-col md:flex-row gap-12 md:gap-16 items-stretch">
         {/* Left: Contact links */}
@@ -28,19 +68,11 @@ export function ContactSection() {
           </p>
           <div className="flex flex-col gap-2 md:gap-2">
             {contactLinks.map((link) => (
-              <a
+              <ContactLink
                 key={link.label}
+                label={link.label}
                 href={link.href}
-                target={link.href.startsWith("mailto") ? undefined : "_blank"}
-                rel={
-                  link.href.startsWith("mailto")
-                    ? undefined
-                    : "noopener noreferrer"
-                }
-                className="text-[clamp(3rem,12vw,6rem)] font-medium uppercase leading-[1.1] text-foreground hover:opacity-60 transition-opacity"
-              >
-                {link.label}
-              </a>
+              />
             ))}
           </div>
         </div>

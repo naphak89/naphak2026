@@ -1,7 +1,10 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useInView } from "motion/react";
+import { TextScramble } from "./TextScramble";
 import { GlassButton } from "./GlassButton";
 
 interface Project {
@@ -31,7 +34,7 @@ const projects: Project[] = [
     imageColor: "bg-neutral-300",
     image: "/projectPictures/out.png",
     mainPicture: "/mainProjectPictures/OUTMainPic.png",
-    link: "https://out.naphak.com/",
+    link: "https://apps.apple.com/us/app/out-irl-hangout/id6751375876",
   },
   {
     title: "StoryMap",
@@ -124,14 +127,42 @@ function ProjectCard({ project }: { project: Project; index: number }) {
 }
 
 export function ProjectsSection() {
+  const headingRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(headingRef, { once: false });
+  const [triggerCount, setTriggerCount] = useState(0);
+  const hasAnimatedRef = useRef(false);
+
+  useEffect(() => {
+    if (isInView && !hasAnimatedRef.current) {
+      hasAnimatedRef.current = true;
+      setTriggerCount(1);
+    }
+  }, [isInView]);
+
+  const handleHover = () => {
+    setTriggerCount((c) => c + 1);
+  };
+
   return (
     <section
       id="projects"
       className="relative px-6 md:px-[6.25%] pt-16 md:pt-32 pb-24 md:pb-40"
     >
-      <h2 className="text-[clamp(3rem,10vw,8rem)] font-medium uppercase leading-none tracking-tight mb-12 md:mb-12">
-        Projects
-      </h2>
+      <div
+        ref={headingRef}
+        onMouseEnter={handleHover}
+        className="mb-12 md:mb-12 cursor-default w-max"
+      >
+        <TextScramble
+          as="h2"
+          trigger={triggerCount}
+          duration={0.8}
+          speed={0.04}
+          className="text-[clamp(3rem,10vw,8rem)] font-medium uppercase leading-none tracking-tight"
+        >
+          Projects
+        </TextScramble>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
         {projects.map((project, i) => (

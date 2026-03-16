@@ -64,7 +64,7 @@ export function HeroSection() {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden px-4"
+      className="relative flex md:min-h-screen min-h-[60vh] w-full flex-col items-center justify-center overflow-hidden px-4"
     >
       <DottedBackground />
       <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none">
@@ -98,7 +98,7 @@ export function HeroSection() {
           width={800}
           height={1000}
           priority
-          className="h-[100vh] w-auto object-cover object-top drop-shadow-2xl"
+          className="h-[50vh] md:h-[100vh] w-auto object-cover object-top drop-shadow-2xl"
         />
       </div>
 

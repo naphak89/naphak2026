@@ -17,7 +17,7 @@ function ScrollRevealText({
   const chars = text.split("");
 
   return (
-    <p className="text-[clamp(1.5rem,4vw,4rem)] font-medium leading-[1.1] max-w-3xl">
+    <p className="text-[clamp(1.8rem,4vw,4rem)] font-medium leading-[1.1] max-w-3xl">
       {chars.map((char, i) => (
         <ScrollChar
           key={i}
@@ -86,7 +86,7 @@ export function AboutSection() {
               alt="Naphak kayaking"
               width={708}
               height={431}
-              className="w-full h-auto md:h-full md:object-cover"
+              className="w-full h-auto aspect-square md:h-full object-cover object-[100%_80%]"
             />
           </div>
         </div>
