@@ -1,38 +1,47 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { GlassButton } from "./GlassButton";
 
 const navLinks = [
-  { label: 'Home', href: '#home' },
-  { label: 'Work', href: '#work' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Contacts', href: '#contacts' },
+  { label: "Home", href: "#home" },
+  { label: "Work", href: "#work" },
+  { label: "Skills", href: "#skills" },
+  { label: "Contacts", href: "#contacts" },
 ];
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const scrollTo = (href: string) => {
+    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+    setMobileOpen(false);
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-6 md:pt-8">
       {/* Desktop nav */}
-      <div className="glass-panel hidden md:flex items-center gap-10 rounded-full px-10 py-5">
+      <div className="hidden md:flex items-center gap-3 rounded-full">
         {navLinks.map((link) => (
-          <a
+          <GlassButton
             key={link.href}
-            href={link.href}
-            className="text-lg font-medium text-foreground transition-opacity hover:opacity-60"
+            onClick={() => scrollTo(link.href)}
+            size="sm"
+            contentClassName="px-5 py-2.5"
           >
             {link.label}
-          </a>
+          </GlassButton>
         ))}
       </div>
 
       {/* Mobile nav toggle */}
       <div className="flex md:hidden w-full justify-end">
-        <button
+        <GlassButton
+          size="icon"
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="glass-panel rounded-2xl p-3"
+          className="!rounded-2xl"
+          contentClassName="p-0"
           aria-label="Toggle navigation menu"
         >
           <svg
@@ -58,7 +67,7 @@ export function Navbar() {
               </>
             )}
           </svg>
-        </button>
+        </GlassButton>
       </div>
 
       {/* Mobile menu dropdown */}
@@ -68,18 +77,18 @@ export function Navbar() {
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="glass-panel absolute top-20 right-4 left-4 md:hidden flex flex-col items-center gap-4 rounded-3xl py-6"
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="glass-panel absolute top-20 right-4 left-4 md:hidden flex flex-col items-stretch gap-3 rounded-3xl p-4"
           >
             {navLinks.map((link) => (
-              <a
+              <GlassButton
                 key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="text-lg font-medium text-foreground transition-opacity hover:opacity-60"
+                onClick={() => scrollTo(link.href)}
+                className="w-full !rounded-2xl"
+                contentClassName="w-full text-center py-3"
               >
                 {link.label}
-              </a>
+              </GlassButton>
             ))}
           </motion.div>
         )}

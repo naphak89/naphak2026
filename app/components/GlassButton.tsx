@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import * as React from "react";
 import { motion } from "motion/react";
@@ -22,7 +22,7 @@ const glassButtonVariants = cva(
     defaultVariants: {
       size: "default",
     },
-  }
+  },
 );
 
 const glassButtonTextVariants = cva(
@@ -39,11 +39,12 @@ const glassButtonTextVariants = cva(
     defaultVariants: {
       size: "default",
     },
-  }
+  },
 );
 
 export interface GlassButtonProps
-  extends Omit<
+  extends
+    Omit<
       React.ButtonHTMLAttributes<HTMLButtonElement>,
       "onAnimationStart" | "onDragStart" | "onDragEnd" | "onDrag"
     >,
@@ -70,7 +71,7 @@ const GlassButton = React.forwardRef<HTMLButtonElement, GlassButtonProps>(
       <motion.div
         className={cn(
           "glass-button-wrap cursor-pointer rounded-full",
-          className
+          className,
         )}
         whileHover="hover"
         whileTap="tap"
@@ -104,16 +105,13 @@ const GlassButton = React.forwardRef<HTMLButtonElement, GlassButtonProps>(
             aria-hidden="true"
             variants={{
               idle: { rotate: 0 },
-              hover: { rotate: 60 },
+              hover: { rotate: 45 },
               tap: { rotate: 90 },
             }}
             transition={shineTransition}
           />
           <span
-            className={cn(
-              glassButtonTextVariants({ size }),
-              contentClassName
-            )}
+            className={cn(glassButtonTextVariants({ size }), contentClassName)}
           >
             {children}
           </span>
@@ -121,7 +119,7 @@ const GlassButton = React.forwardRef<HTMLButtonElement, GlassButtonProps>(
         <div className="glass-button-shadow rounded-full"></div>
       </motion.div>
     );
-  }
+  },
 );
 GlassButton.displayName = "GlassButton";
 
