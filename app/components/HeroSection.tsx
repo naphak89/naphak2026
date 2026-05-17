@@ -51,7 +51,7 @@ export function HeroSection() {
           id="dottedGrid"
         >
           <circle
-            fill="oklch(from var(--foreground) l c h / 30%)"
+            fill="rgba(16, 16, 16, 0.3)"
             r="1"
             cy="2"
             cx="2"

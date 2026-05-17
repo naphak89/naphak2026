@@ -38,7 +38,7 @@ export function WorkedAtSection() {
       ref={containerRef}
       className="relative py-8 md:py-12 overflow-hidden"
     >
-      <p className="text-sm font-medium uppercase tracking-widest text-foreground/60 text-center mb-10">
+      <p className="text-sm font-medium uppercase tracking-widest text-[rgba(16,16,16,0.6)] text-center mb-10">
         Worked At
       </p>
 
@@ -57,7 +57,11 @@ export function WorkedAtSection() {
             {repeatedCompanies.map((company, i) => (
               <div
                 key={`row1-${i}`}
-                className="flex items-center justify-center px-0 py-5 rounded-2xl bg-linear-to-br backdrop-blur-sm min-w-[180px]"
+                className="flex items-center justify-center px-0 py-5 rounded-2xl backdrop-blur-sm min-w-[180px]"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(230,230,230,0.35) 100%)",
+                }}
               >
                 <img
                   src={company.logo}
@@ -73,7 +77,11 @@ export function WorkedAtSection() {
             {repeatedCompanies.map((company, i) => (
               <div
                 key={`row2-${i}`}
-                className="flex items-center justify-center px-10 py-5 rounded-2xl bg-linear-to-br backdrop-blur-sm min-w-[180px]"
+                className="flex items-center justify-center px-10 py-5 rounded-2xl backdrop-blur-sm min-w-[180px]"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(230,230,230,0.35) 100%)",
+                }}
               >
                 <img
                   src={company.logo}

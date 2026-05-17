@@ -70,7 +70,7 @@ export function AboutSection() {
         className="flex flex-col md:flex-row gap-10 md:gap-16 md:relative"
       >
         <div className="flex-1 md:pr-[calc(37%+4rem)]">
-          <p className="text-sm font-medium uppercase tracking-widest text-foreground/60 mb-6">
+          <p className="text-sm font-medium uppercase tracking-widest text-[rgba(16,16,16,0.6)] mb-6">
             Myself
           </p>
           <ScrollRevealText
